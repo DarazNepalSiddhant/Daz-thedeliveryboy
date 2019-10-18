@@ -660,6 +660,17 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Bullet.Exps.Speed,
 		C3.Behaviors.Bullet.Acts.SetSpeed,
 		C3.Plugins.Text.Acts.SetText,
+		C3.Plugins.System.Acts.SetVar,
+		C3.Plugins.System.Exps.int,
+		C3.Plugins.System.Cnds.Compare,
+		C3.Plugins.System.Acts.SubVar,
+		C3.Plugins.System.Exps.zeropad,
+		C3.Plugins.System.Cnds.Every,
+		C3.Plugins.System.Exps.random,
+		C3.Plugins.System.Acts.CreateObject,
+		C3.Plugins.Sprite.Acts.SetAnimFrame,
+		C3.Plugins.Sprite.Acts.SetInstanceVar,
+		C3.Plugins.Sprite.Exps.AnimationFrame,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.Touch.Cnds.OnTouchStart,
 		C3.Plugins.Keyboard.Cnds.OnKey,
@@ -675,23 +686,16 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Plugins.System.Acts.SetObjectTimescale,
-		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.System.Acts.Wait,
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Behaviors.Platform.Cnds.IsOnFloor,
 		C3.Plugins.System.Cnds.CompareBoolVar,
 		C3.Plugins.System.Cnds.CompareVar,
-		C3.Plugins.System.Exps.random,
-		C3.Plugins.System.Cnds.Compare,
-		C3.Plugins.System.Acts.CreateObject,
-		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Sprite.Acts.MoveToBottom,
 		C3.Plugins.System.Cnds.Else,
 		C3.Plugins.Sprite.Cnds.CompareX,
-		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
-		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
-		C3.Plugins.System.Acts.SetFunctionReturnValue,
-		C3.Plugins.System.Exps.zeropad,
+		C3.Plugins.System.Cnds.TriggerOnce,
+		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.TextBox.Acts.SetVisible,
 		C3.Plugins.Touch.Cnds.IsTouchingObject,
 		C3.Plugins.Touch.Cnds.OnTouchObject,
@@ -707,10 +711,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Exps.left,
 		C3.Plugins.System.Exps.urlencode,
 		C3.Plugins.System.Exps.mid,
-		C3.Plugins.System.Exps.int,
 		C3.Plugins.AJAX.Acts.Post,
 		C3.Plugins.Text.Acts.SetVisible,
-		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.AJAX.Cnds.OnProgress,
 		C3.Plugins.AJAX.Cnds.OnComplete,
@@ -726,7 +728,6 @@ self.C3_JsPropNameTable = [
 	{Ground: 0},
 	{Touch: 0},
 	{Keyboard: 0},
-	{Scored: 0},
 	{DestroyOutsideLayout: 0},
 	{Cactus: 0},
 	{replay: 0},
@@ -770,6 +771,9 @@ self.C3_JsPropNameTable = [
 	{clouds: 0},
 	{Sprite: 0},
 	{GameOverSprite: 0},
+	{TimeCountdown: 0},
+	{score: 0},
+	{Balloon: 0},
 	{input: 0},
 	{GroundWidth: 0},
 	{CloudWidth: 0},
@@ -792,6 +796,9 @@ self.C3_JsPropNameTable = [
 	{web_app_url: 0},
 	{GameOverBoolean: 0},
 	{s: 0},
+	{GameTime: 0},
+	{GameTimeSeconds: 0},
+	{GameTimeMinutes: 0},
 	{value0: 0},
 	{value1: 0},
 	{value2: 0},
@@ -917,6 +924,48 @@ self.C3_JsPropNameTable = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => v0.GetValue();
 		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0((v1.GetValue() % 60));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0(((v1.GetValue() / 60) % 60));
+		},
+		() => 0,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0();
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			const f2 = p._GetNode(2).GetBoundMethod();
+			const v3 = p._GetNode(3).GetVar();
+			return () => ((f0(v1.GetValue(), 2) + " : ") + f2(v3.GetValue(), 2));
+		},
+		() => 1,
+		() => 3,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(4, 10);
+		},
+		() => "Layer 0",
+		() => 479,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(530, 620);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(11);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 5);
+		},
 		() => "Player Logic",
 		p => {
 			const n0 = p._GetNode(0);
@@ -925,7 +974,6 @@ self.C3_JsPropNameTable = [
 		() => 236,
 		() => 243,
 		() => "Accident",
-		() => 0,
 		() => 1.5,
 		() => "Animation",
 		() => "Run",
@@ -944,8 +992,6 @@ self.C3_JsPropNameTable = [
 			return () => f0(10);
 		},
 		() => 7,
-		() => "Layer 0",
-		() => 479,
 		() => 663,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -954,7 +1000,7 @@ self.C3_JsPropNameTable = [
 		() => "StreetLamp",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0(570, 595);
+			return () => f0(530, 595);
 		},
 		() => "Environment",
 		() => -728,
@@ -972,20 +1018,9 @@ self.C3_JsPropNameTable = [
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject();
 		},
-		() => 1,
 		p => {
-			const v0 = p._GetNode(0).GetVar();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => (v0.GetValue() + f1());
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			const v1 = p._GetNode(1).GetVar();
-			return () => (v0.GetValue() - (v1.GetValue() % 10));
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (v0.GetValue() * 5);
+			const n0 = p._GetNode(0);
+			return () => n0.ExpInstVar();
 		},
 		() => "OverSetup",
 		() => 237,
@@ -1168,7 +1203,6 @@ self.C3_JsPropNameTable = [
 		() => "U",
 		() => 2,
 		() => "T",
-		() => 3,
 		() => "H",
 		() => 4,
 		() => "O",
@@ -1184,10 +1218,6 @@ self.C3_JsPropNameTable = [
 		() => 423,
 		() => 417,
 		() => 100,
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0();
-		},
 		() => "OverTouchOver2"
 	];
 }
