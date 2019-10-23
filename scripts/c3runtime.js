@@ -652,6 +652,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Behaviors.Bullet.Acts.SetAngleOfMotion,
 		C3.Behaviors.Pin.Acts.Pin,
+		C3.Plugins.Audio.Acts.Play,
 		C3.Plugins.System.Cnds.EveryTick,
 		C3.Plugins.Sprite.Acts.SetX,
 		C3.Plugins.Sprite.Exps.X,
@@ -675,13 +676,13 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Touch.Cnds.OnTouchStart,
 		C3.Plugins.Keyboard.Cnds.OnKey,
 		C3.Behaviors.Platform.Acts.SimulateControl,
-		C3.Behaviors.Platform.Cnds.IsFalling,
 		C3.Behaviors.Platform.Cnds.IsJumping,
 		C3.Plugins.Keyboard.Cnds.IsKeyDown,
 		C3.Plugins.Touch.Cnds.IsInTouch,
 		C3.Behaviors.Platform.Acts.SetVectorY,
 		C3.Behaviors.Platform.Exps.VectorY,
 		C3.Plugins.Sprite.Cnds.OnCollision,
+		C3.Plugins.Audio.Acts.Stop,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Plugins.Sprite.Acts.SetAnim,
@@ -690,17 +691,20 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Behaviors.Platform.Cnds.IsOnFloor,
 		C3.Plugins.System.Cnds.CompareBoolVar,
+		C3.Behaviors.Platform.Cnds.IsFalling,
 		C3.Plugins.System.Cnds.CompareVar,
 		C3.Plugins.Sprite.Acts.MoveToBottom,
 		C3.Plugins.System.Cnds.Else,
 		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.Sprite.Acts.Destroy,
+		C3.Plugins.Sprite.Cnds.CompareFrame,
 		C3.Plugins.TextBox.Acts.SetVisible,
 		C3.Plugins.Touch.Cnds.IsTouchingObject,
-		C3.Plugins.Touch.Cnds.OnTouchObject,
+		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Behaviors.Fade.Acts.StartFade,
 		C3.Plugins.System.Acts.ResetGlobals,
+		C3.Plugins.Touch.Cnds.OnTouchObject,
 		C3.Plugins.TextBox.Cnds.OnTextChanged,
 		C3.Plugins.TextBox.Acts.SetEnabled,
 		C3.Plugins.System.Cnds.RegexTest,
@@ -713,7 +717,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Exps.mid,
 		C3.Plugins.AJAX.Acts.Post,
 		C3.Plugins.Text.Acts.SetVisible,
-		C3.Plugins.Touch.Cnds.OnTapGestureObject,
+		C3.Plugins.Audio.Cnds.IsSilent,
+		C3.Plugins.Audio.Acts.SetSilent,
 		C3.Plugins.AJAX.Cnds.OnProgress,
 		C3.Plugins.AJAX.Cnds.OnComplete,
 		C3.Plugins.AJAX.Exps.LastData
@@ -774,7 +779,9 @@ self.C3_JsPropNameTable = [
 	{TimeCountdown: 0},
 	{score: 0},
 	{Balloon: 0},
+	{Sound: 0},
 	{input: 0},
+	{Buttons: 0},
 	{GroundWidth: 0},
 	{CloudWidth: 0},
 	{backgroundBuildingWidth: 0},
@@ -905,6 +912,8 @@ self.C3_JsPropNameTable = [
 
 	self.C3_ExpressionFuncs = [
 		() => 180,
+		() => -10,
+		() => "ScooterNormal",
 		p => {
 			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
@@ -967,6 +976,7 @@ self.C3_JsPropNameTable = [
 			return () => (n0.ExpObject() - 5);
 		},
 		() => "Player Logic",
+		() => "",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpBehavior() / 2);
@@ -1022,6 +1032,7 @@ self.C3_JsPropNameTable = [
 			const n0 = p._GetNode(0);
 			return () => n0.ExpInstVar();
 		},
+		() => 5,
 		() => "OverSetup",
 		() => 237,
 		() => 425,
@@ -1174,7 +1185,6 @@ self.C3_JsPropNameTable = [
 			return () => ((v0.GetValue() + "&phone=") + n1.ExpObject());
 		},
 		() => "senddata",
-		() => "",
 		() => "GET",
 		() => 660,
 		() => 9,
@@ -1206,7 +1216,6 @@ self.C3_JsPropNameTable = [
 		() => "H",
 		() => 4,
 		() => "O",
-		() => 5,
 		() => "R",
 		() => 6,
 		() => "I",
