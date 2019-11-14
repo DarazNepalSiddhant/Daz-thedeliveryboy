@@ -33729,6 +33729,7 @@ self.C3_JsPropNameTable = [
 	{TimeCountdown: 0},
 	{Balloon: 0},
 	{Sound: 0},
+	{TestText: 0},
 	{input: 0},
 	{Buttons: 0},
 	{GroundWidth: 0},
